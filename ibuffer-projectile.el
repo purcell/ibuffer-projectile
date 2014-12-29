@@ -4,7 +4,7 @@
 ;;
 ;; Author: Steve Purcell <steve@sanityinc.com>
 ;; Keywords: themes
-;; Package-Requires: ((cl-lib "0.2") (projectile "0.11.0"))
+;; Package-Requires: ((projectile "0.11.0"))
 ;; X-URL: http://github.com/purcell/ibuffer-projectile
 ;; URL: http://github.com/purcell/ibuffer-projectile
 ;; Version: 0
