@@ -7,11 +7,12 @@ Emacs' `ibuffer-mode` is a wonderful replacement for the built-in
 `list-buffer` command, and allows buffers to be grouped
 programatically, e.g. by major mode.
 
-You might like to see your buffers grouped by the associated version
-control project.
+`ibuffer-projectile` lets you group your buffers by their projectile
+root directory.
 
-That's where `ibuffer-projectile` comes in: it lets you group your
-buffers by their projectile root directory
+I personally use [ibuffer-vc](https://github.com/purcell/ibuffer-vc)
+because I prefer its grouping behaviour, but I thought this would be
+useful to some people too.
 
 ## How to install ##
 
