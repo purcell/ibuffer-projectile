@@ -5,9 +5,8 @@
 ;; Author: Steve Purcell <steve@sanityinc.com>
 ;; Keywords: themes
 ;; Package-Requires: ((projectile "0.11.0"))
-;; X-URL: http://github.com/purcell/ibuffer-projectile
 ;; URL: http://github.com/purcell/ibuffer-projectile
-;; Version: 0
+;; Package-Version: 0
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -46,8 +45,6 @@
 ;; combine with your own custom groups.
 ;;
 ;;; Code:
-
-;; requires
 
 (require 'ibuffer)
 (require 'ibuf-ext)
