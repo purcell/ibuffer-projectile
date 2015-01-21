@@ -32,7 +32,7 @@ useful to some people too.
 
 ## How to install ##
 
-See `ibuffer-projectile.el`, or (preferred) install from [Melpa][Melpa].
+Add `ibuffer-projectile.el` to your `load-path`, or (preferred) install from [Melpa][Melpa].
 
 
 [Melpa]: http://melpa.org "Melpa"
