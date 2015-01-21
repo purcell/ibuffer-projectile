@@ -52,7 +52,6 @@
 (require 'ibuffer)
 (require 'ibuf-ext)
 (require 'projectile)
-(require 'cl-lib)
 
 
 (defgroup ibuffer-projectile nil
