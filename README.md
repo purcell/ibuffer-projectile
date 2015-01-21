@@ -10,6 +10,22 @@ programatically, e.g. by major mode.
 `ibuffer-projectile` lets you group your buffers by their projectile
 root directory.
 
+You can use this package manually or automatically. For manual use,
+call `ibuffer-projectile-set-filter-groups`. To have this function
+called when you open ibuffer, add this hook to your configuration:
+
+```
+(add-hook 'ibuffer-hook
+    (lambda ()
+      (ibuffer-projectile-set-filter-groups)
+      (unless (eq ibuffer-sorting-mode 'alphabetic)
+        (ibuffer-do-sort-by-alphabetic))))
+```
+
+Alternatively, use `ibuffer-projectile-generate-filter-groups'
+to programmatically obtain a list of filter groups that you can
+combine with your own custom groups.
+
 I personally use [ibuffer-vc](https://github.com/purcell/ibuffer-vc)
 because I prefer its grouping behaviour, but I thought this would be
 useful to some people too.
