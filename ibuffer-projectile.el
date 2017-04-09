@@ -82,8 +82,9 @@ This option can be used to exclude certain files from the grouping mechanism."
   "Return root-dir for BUF.
 If the file is not in a project, then nil is returned instead."
   (with-current-buffer buf
-    (let ((file-name (or buffer-file-name default-directory)))
-      (when (ibuffer-projectile--include-file-p file-name)
+    (let ((file-name (buffer-file-name)))
+      (when (and file-name
+                 (ibuffer-projectile--include-file-p file-name))
         (let ((projectile-require-project-root nil))
           (projectile-project-root))))))
 
