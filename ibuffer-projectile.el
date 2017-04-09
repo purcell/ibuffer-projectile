@@ -85,8 +85,7 @@ If the file is not in a project, then nil is returned instead."
     (let ((file-name (buffer-file-name)))
       (when (and file-name
                  (ibuffer-projectile--include-file-p file-name))
-        (let ((projectile-require-project-root nil))
-          (projectile-project-root))))))
+        (ignore-errors (projectile-project-root))))))
 
 (define-ibuffer-filter projectile-root
     "Toggle current view to buffers with projectile root dir QUALIFIER."
