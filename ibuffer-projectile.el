@@ -98,10 +98,16 @@ If the file is not in a project, then nil is returned instead."
 (defun ibuffer-projectile-generate-filter-groups ()
   "Create a set of ibuffer filter groups based on the projectile root dirs of buffers."
   (let ((roots (ibuffer-remove-duplicates
-                (delq nil (mapcar 'ibuffer-projectile-root (buffer-list))))))
+                (delq nil (mapcar (lambda (buf)
+                                    (let ((root (ibuffer-projectile-root buf)))
+                                      (when root
+                                        (cons (with-current-buffer buf
+                                                (projectile-project-name))
+                                              root))))
+                                  (buffer-list))))))
     (mapcar (lambda (root)
-              (cons (abbreviate-file-name root)
-                    `((projectile-root . ,root))))
+              (cons (format "Projectile:%s" (car root))
+                    `((projectile-root . ,(cdr root)))))
             roots)))
 
 ;;;###autoload
