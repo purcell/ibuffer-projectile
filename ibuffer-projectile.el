@@ -79,13 +79,15 @@ This option can be used to exclude certain files from the grouping mechanism."
        (funcall ibuffer-projectile-include-function file)))
 
 (defun ibuffer-projectile-root (buf)
-  "Return root-dir for BUF.
+  "Return a cons cell (project-name . root-dir) for BUF.
 If the file is not in a project, then nil is returned instead."
   (with-current-buffer buf
-    (let ((file-name (buffer-file-name)))
+    (let ((file-name (buffer-file-name))
+          (root (ignore-errors (projectile-project-root))))
       (when (and file-name
+                 root
                  (ibuffer-projectile--include-file-p file-name))
-        (ignore-errors (projectile-project-root))))))
+        (cons (projectile-project-name) root)))))
 
 (define-ibuffer-filter projectile-root
     "Toggle current view to buffers with projectile root dir QUALIFIER."
@@ -98,16 +100,10 @@ If the file is not in a project, then nil is returned instead."
 (defun ibuffer-projectile-generate-filter-groups ()
   "Create a set of ibuffer filter groups based on the projectile root dirs of buffers."
   (let ((roots (ibuffer-remove-duplicates
-                (delq nil (mapcar (lambda (buf)
-                                    (let ((root (ibuffer-projectile-root buf)))
-                                      (when root
-                                        (cons (with-current-buffer buf
-                                                (projectile-project-name))
-                                              root))))
-                                  (buffer-list))))))
+                (delq nil (mapcar 'ibuffer-projectile-root (buffer-list))))))
     (mapcar (lambda (root)
               (cons (format "Projectile:%s" (car root))
-                    `((projectile-root . ,(cdr root)))))
+                    `((projectile-root . ,root))))
             roots)))
 
 ;;;###autoload
