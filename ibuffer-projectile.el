@@ -97,7 +97,7 @@ If the file is not in a project, then nil is returned instead."
 (define-ibuffer-filter projectile-root
     "Toggle current view to buffers with projectile root dir QUALIFIER."
   (:description "projectile root dir"
-                :reader (read-from-minibuffer "Filter by projectile root dir (regexp): "))
+                :reader (read-regexp "Filter by projectile root dir (regexp): "))
   (ibuffer-awhen (ibuffer-projectile-root buf)
     (equal qualifier it)))
 
