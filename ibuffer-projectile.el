@@ -87,7 +87,7 @@ This option can be used to exclude certain files from the grouping mechanism."
   "Return a cons cell (project-name . root-dir) for BUF.
 If the file is not in a project, then nil is returned instead."
   (with-current-buffer buf
-    (let ((file-name (buffer-file-name))
+    (let ((file-name (ibuffer-buffer-file-name))
           (root (ignore-errors (projectile-project-root))))
       (when (and file-name
                  root
