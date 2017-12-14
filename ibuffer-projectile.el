@@ -106,6 +106,18 @@ If the file is not in a project, then nil is returned instead."
   (:name "Project")
   (projectile-project-name))
 
+;;;###autoload (autoload 'ibuffer-do-sort-by-project-name "ibuffer-projectile")
+(define-ibuffer-sorter project-name
+  "Sort the buffers by their project name."
+  (:description "project")
+  (let ((project1 (with-current-buffer (car a)
+                    (projectile-project-name)))
+        (project2 (with-current-buffer (car b)
+                    (projectile-project-name))))
+    (if (and project1 project2)
+        (string-lessp project1 project2)
+      (not (null project1)))))
+
 ;;;###autoload
 (defun ibuffer-projectile-generate-filter-groups ()
   "Create a set of ibuffer filter groups based on the projectile root dirs of buffers."
