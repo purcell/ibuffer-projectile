@@ -101,6 +101,11 @@ If the file is not in a project, then nil is returned instead."
   (ibuffer-awhen (ibuffer-projectile-root buf)
     (equal qualifier it)))
 
+;;;###autoload (autoload 'ibuffer-make-column-project-name "ibuffer-projectile")
+(define-ibuffer-column project-name
+  (:name "Project")
+  (projectile-project-name))
+
 ;;;###autoload
 (defun ibuffer-projectile-generate-filter-groups ()
   "Create a set of ibuffer filter groups based on the projectile root dirs of buffers."
