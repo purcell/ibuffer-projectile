@@ -76,6 +76,12 @@ This option can be used to exclude certain files from the grouping mechanism."
   :type 'string
   :group 'ibuffer-projectile)
 
+(defcustom ibuffer-projectile-show-root-dir nil
+  "If non-nil, use project directory instead of project name in ibuffer
+group names."
+  :type 'boolean
+  :group 'ibuffer-projectile)
+
 (defun ibuffer-projectile--include-file-p (file)
   "Return t iff FILE should be included in ibuffer-projectile's filtering."
   (and file
@@ -124,8 +130,9 @@ If the file is not in a project, then nil is returned instead."
   (let ((roots (ibuffer-remove-duplicates
                 (delq nil (mapcar 'ibuffer-projectile-root (buffer-list))))))
     (mapcar (lambda (root)
-              (cons (format "%s%s" ibuffer-projectile-prefix (car root))
-                    `((projectile-root . ,root))))
+	      (let ((id (if ibuffer-projectile-show-root-dir (cdr root) (car root))))
+		(cons (format "%s%s" ibuffer-projectile-prefix id)
+		      `((projectile-root . ,root)))))
             roots)))
 
 ;;;###autoload
