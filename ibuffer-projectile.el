@@ -129,6 +129,12 @@ If the file is not in a project, then nil is returned instead."
         (string-lessp project1 project2)
       (not (null project1)))))
 
+(define-ibuffer-column project-file
+  (:name "🚀Filename")
+  (format "%s" (if (and buffer-file-name (projectile-project-root))
+                   (dired-replace-in-string (projectile-project-root) "::" (buffer-file-name))
+                 (buffer-name))))
+
 ;;;###autoload
 (defun ibuffer-projectile-generate-filter-groups ()
   "Create a set of ibuffer filter groups based on the projectile root dirs of buffers."
