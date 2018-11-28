@@ -44,6 +44,19 @@
 ;; to programmatically obtain a list of filter groups that you can
 ;; combine with your own custom groups.
 ;;
+;; To display filenames relative to the project root, use project-relative-file
+;; in `ibuffer-formats', e.g.:
+;;
+;; (setq ibuffer-formats
+;;       '((mark modified read-only " "
+;;               (name 18 18 :left :elide)
+;;               " "
+;;               (size 9 -1 :right)
+;;               " "
+;;               (mode 16 16 :left :elide)
+;;               " "
+;;               project-relative-file)))
+
 ;;; Code:
 
 (require 'ibuffer)
@@ -128,6 +141,15 @@ If the file is not in a project, then nil is returned instead."
     (if (and project1 project2)
         (string-lessp project1 project2)
       (not (null project1)))))
+
+;;;###autoload (autoload 'ibuffer-make-column-project-relative-file "ibuffer-projectile")
+(define-ibuffer-column project-relative-file
+  (:name "Filename")
+  (when buffer-file-name
+    (let ((root (cdr (ibuffer-projectile-root buffer))))
+      (if root
+          (file-relative-name buffer-file-name root)
+        (abbreviate-file-name buffer-file-name)))))
 
 ;;;###autoload
 (defun ibuffer-projectile-generate-filter-groups ()
