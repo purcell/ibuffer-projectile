@@ -123,7 +123,10 @@ If the file is not in a project, then nil is returned instead."
   (:description "projectile root dir"
                 :reader (read-regexp "Filter by projectile root dir (regexp): "))
   (ibuffer-awhen (ibuffer-projectile-root buf)
-    (equal qualifier it)))
+    (if (stringp qualifier)
+        (or (string-match-p qualifier (car it))
+            (string-match-p qualifier (cdr-safe it)))
+      (equal qualifier it))))
 
 ;;;###autoload (autoload 'ibuffer-make-column-project-name "ibuffer-projectile")
 (define-ibuffer-column project-name
