@@ -163,7 +163,7 @@ If the file is not in a project, then nil is returned instead."
 
 ;;;###autoload
 (defun ibuffer-projectile-set-filter-groups ()
-  "Set the current filter groups to filter by vc root dir."
+  "Set the current filter groups to filter by projectile root dir."
   (interactive)
   (setq ibuffer-filter-groups (ibuffer-projectile-generate-filter-groups))
   (message "ibuffer-projectile: groups set")
