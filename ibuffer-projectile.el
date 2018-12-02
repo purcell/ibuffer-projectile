@@ -3,8 +3,8 @@
 ;; Copyright (C) 2011-2014 Steve Purcell
 ;;
 ;; Author: Steve Purcell <steve@sanityinc.com>
-;; Keywords: themes
-;; Package-Requires: ((projectile "0.11.0"))
+;; Keywords: convenience
+;; Package-Requires: ((projectile "0.11.0") (emacs "24"))
 ;; URL: http://github.com/purcell/ibuffer-projectile
 ;; Package-Version: 0
 ;;
