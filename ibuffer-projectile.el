@@ -5,7 +5,7 @@
 ;; Author: Steve Purcell <steve@sanityinc.com>
 ;; Keywords: convenience
 ;; Package-Requires: ((projectile "0.11.0") (emacs "24.1"))
-;; URL: http://github.com/purcell/ibuffer-projectile
+;; URL: https://github.com/purcell/ibuffer-projectile
 ;; Package-Version: 0
 ;;
 ;; This program is free software; you can redistribute it and/or modify
