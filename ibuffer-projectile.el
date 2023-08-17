@@ -4,9 +4,9 @@
 ;;
 ;; Author: Steve Purcell <steve@sanityinc.com>
 ;; Keywords: convenience
-;; Package-Requires: ((projectile "0.11.0") (emacs "24.1"))
+;; Package-Requires: ((projectile "0.11.0") (emacs "25.1") (seq "2"))
 ;; URL: https://github.com/purcell/ibuffer-projectile
-;; Package-Version: 0
+;; Package-Version: 0.4
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -62,6 +62,7 @@
 (require 'ibuffer)
 (require 'ibuf-ext)
 (require 'projectile)
+(require 'seq)
 
 
 (defgroup ibuffer-projectile nil
@@ -122,7 +123,7 @@ If the file is not in a project, then nil is returned instead."
     "Toggle current view to buffers with projectile root dir QUALIFIER."
   (:description "projectile root dir"
                 :reader (read-regexp "Filter by projectile root dir (regexp): "))
-  (ibuffer-awhen (ibuffer-projectile-root buf)
+  (when-let ((it (ibuffer-projectile-root buf)))
     (if (stringp qualifier)
         (or (string-match-p qualifier (car it))
             (string-match-p qualifier (cdr-safe it)))
@@ -157,7 +158,7 @@ If the file is not in a project, then nil is returned instead."
 ;;;###autoload
 (defun ibuffer-projectile-generate-filter-groups ()
   "Create a set of ibuffer filter groups based on the projectile root dirs of buffers."
-  (let ((roots (ibuffer-remove-duplicates
+  (let ((roots (seq-uniq
                 (delq nil (mapcar 'ibuffer-projectile-root (buffer-list))))))
     (mapcar (lambda (root)
               (cons (funcall ibuffer-projectile-group-name-function (car root) (cdr root))
@@ -170,11 +171,10 @@ If the file is not in a project, then nil is returned instead."
   (interactive)
   (setq ibuffer-filter-groups (ibuffer-projectile-generate-filter-groups))
   (message "ibuffer-projectile: groups set")
-  (let ((ibuf (get-buffer "*Ibuffer*")))
-    (when ibuf
-      (with-current-buffer ibuf
-        (pop-to-buffer ibuf)
-        (ibuffer-update nil t)))))
+  (when-let ((ibuf (get-buffer "*Ibuffer*")))
+    (with-current-buffer ibuf
+      (pop-to-buffer ibuf)
+      (ibuffer-update nil t))))
 
 
 (provide 'ibuffer-projectile)
