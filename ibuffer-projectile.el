@@ -97,6 +97,11 @@ name, and the root directory path."
   :type 'function
   :group 'ibuffer-projectile)
 
+(defcustom ibuffer-projectile-filter-groups-extra '()
+  "A static list of filter groups to apply to all non-projectile buffers."
+  ;:type 'list
+  :group 'ibuffer-projectile)
+
 (defun ibuffer-projectile-default-group-name (project-name root-dir)
   "Produce an ibuffer group name string for PROJECT-NAME and ROOT-DIR."
   (format "%s%s" ibuffer-projectile-prefix project-name))
@@ -160,10 +165,11 @@ If the file is not in a project, then nil is returned instead."
   "Create a set of ibuffer filter groups based on the projectile root dirs of buffers."
   (let ((roots (seq-uniq
                 (delq nil (mapcar 'ibuffer-projectile-root (buffer-list))))))
-    (mapcar (lambda (root)
+    (append (mapcar (lambda (root)
               (cons (funcall ibuffer-projectile-group-name-function (car root) (cdr root))
                     `((projectile-root . ,root))))
-            roots)))
+            roots)
+            ibuffer-projectile-filter-groups-extra)))
 
 ;;;###autoload
 (defun ibuffer-projectile-set-filter-groups ()
