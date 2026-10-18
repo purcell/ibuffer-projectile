@@ -112,11 +112,10 @@ name, and the root directory path."
   "Return a cons cell (project-name . root-dir) for BUF.
 If the file is not in a project, then nil is returned instead."
   (with-current-buffer buf
-    (let ((file-name (ibuffer-buffer-file-name))
-          (root (ignore-errors (projectile-project-root))))
-      (when (and file-name
-                 root
-                 (ibuffer-projectile--include-file-p file-name))
+    (let* ((file-name (ibuffer-buffer-file-name))
+           (root (and (ibuffer-projectile--include-file-p file-name)
+                      (ignore-errors (projectile-project-root)))))
+      (when root
         (cons (projectile-project-name) root)))))
 
 (define-ibuffer-filter projectile-root
